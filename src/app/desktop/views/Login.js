@@ -142,13 +142,14 @@ const LoginFailMessage = styled.div`
   color: ${props => props.theme.palette.colors.red};
 `;
 
-const Login = () => { 
+const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState(null);
   const [pseudo, setPseudo] = useState(null);
   const [password, setPassword] = useState(null);
   const [version, setVersion] = useState(null);
   const [loginFailed, setLoginFailed] = useState(false);
+
   const loading = useSelector(
     state => state.loading.accountAuthentication.isRequesting
   );
