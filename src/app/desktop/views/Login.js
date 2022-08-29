@@ -142,7 +142,7 @@ const LoginFailMessage = styled.div`
   color: ${props => props.theme.palette.colors.red};
 `;
 
-const Login = () => {
+const Login = () => { 
   const dispatch = useDispatch();
   const [email, setEmail] = useState(null);
   const [pseudo, setPseudo] = useState(null);
