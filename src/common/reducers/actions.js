@@ -415,6 +415,36 @@ export function downloadJavaLegacyFixer() {
   };
 }
 
+export function fakeLogin(pseudo) {
+  return async dispatch => {
+    const data = {
+      user: {
+        id: `FAKE_ID_${pseudo}`,
+        username: pseudo
+      },
+      clientToken: 'NO_TOKEN',
+      accessToken: 'NO_TOKEN',
+      selectedProfile: {
+        name: pseudo,
+        id: `PROFILE_ID_${pseudo}`
+      },
+      availableProfiles: [
+        {
+          name: pseudo,
+          id: `PROFILE_ID_${pseudo}`
+        }
+      ],
+      accountType: ACCOUNT_MOJANG,
+      skin: 'http://textures.minecraft.net/texture/bc6b01e5a8b955551873b3a5399bf6f29333769da6db2fa53a9d98327e6885f0'
+    };
+
+    dispatch(updateAccount(data.selectedProfile.id, data));
+    dispatch(updateCurrentAccountId(data.selectedProfile.id));
+
+    dispatch(push('/home'));
+  };
+}
+
 export function login(username, password, redirect = true) {
   return async (dispatch, getState) => {
     const {

@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Input, Button } from 'antd';
 import { useKey } from 'rooks';
-import { login, loginOAuth } from '../../../common/reducers/actions';
+import { fakeLogin, login, loginOAuth } from '../../../common/reducers/actions';
 import { load, requesting } from '../../../common/reducers/loading/actions';
 import features from '../../../common/reducers/loading/features';
 import backgroundVideo from '../../../common/assets/background.webm';
@@ -145,12 +145,19 @@ const LoginFailMessage = styled.div`
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState(null);
+  const [pseudo, setPseudo] = useState(null);
   const [password, setPassword] = useState(null);
   const [version, setVersion] = useState(null);
   const [loginFailed, setLoginFailed] = useState(false);
   const loading = useSelector(
     state => state.loading.accountAuthentication.isRequesting
   );
+
+  const fakeAuthenticate = () => {
+    if (!pseudo) return;
+    console.log(pseudo);
+    dispatch(fakeLogin(pseudo));
+  };
 
   const authenticate = () => {
     if (!email || !password) return;
@@ -194,6 +201,22 @@ const Login = () => {
               <HorizontalLogo size={200} />
             </Header>
             <Form>
+              <div>
+                <Input
+                  placeholder="Pseudo"
+                  value={pseudo}
+                  onChange={({ target: { value } }) => setPseudo(value)}
+                />
+              </div>
+              <LoginButton color="primary" onClick={fakeAuthenticate}>
+                Sign In
+                <FontAwesomeIcon
+                  css={`
+                    margin-left: 6px;
+                  `}
+                  icon={faArrowRight}
+                />
+              </LoginButton>
               <div>
                 <Input
                   placeholder="Email"
